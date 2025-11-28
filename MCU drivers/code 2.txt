@@ -1,0 +1,170 @@
+ void __interrupt() isr() {
+    if (INT0IF) {
+        LATB3 = !LATB3;
+        INT0IF = 0;
+    }
+}
+
+void main(void) {
+    
+    GIE = 1;    PEIE = 0;   IPEN = 0;
+
+    INT0IE = 1;    INT0IF = 0;    INTEDG0 = 0; //falling
+
+    TRISB3 = 0;    LATB3 = 0;    TRISB2 = 0;    LATB2 = 0;
+
+    while (1) {
+        LATB2 = !LATB2;
+        __delay_ms(250);
+    }
+}
+ */
+
+/*
+ void __interrupt() isr() {
+    if (RBIF) {
+
+        if (!PORTBbits.RB4 && !PORTBbits.RB5) LATB = 0;
+        else if (PORTBbits.RB4 && !PORTBbits.RB5) {
+            LATB0 = 1;
+            LATB1 = 0;
+            LATB2 = 0;
+        } else if (!PORTBbits.RB4 && PORTBbits.RB5) {
+            LATB0 = 0;
+            LATB1 = 1;
+            LATB2 = 0;
+        } else {
+            LATB0 = 0;
+            LATB1 = 0;
+            LATB2 = 1;
+        }
+        RBIF = 0;
+    }
+}
+
+void main(void) {
+
+    GIE = 1;
+    PEIE = 0;
+    IPEN = 0;
+
+    RBIE = 1;
+    RBIF = 0;
+    INTEDG0 = 1;
+
+    TRISB0 = 0;
+    TRISB1 = 0;
+    TRISB2 = 0;
+    LATB0 = 0;
+    LATB1 = 0;
+    LATB2 = 0;
+
+    while (1) {
+    }
+}
+ */
+
+/*
+ void __interrupt() isr() {
+
+    if(INT1IF){
+    
+     LATB0 = !LATB0 ;   
+     INT1IF = 0 ;
+    }
+}
+
+void main(void) {
+
+    GIE = 1;
+    PEIE = 0;
+    IPEN = 0;
+
+    INT1IE = 1;
+    INT1IF = 0;
+    INTEDG1 = 1;
+
+    TRISB0 = 0;
+    LATB0 = 0;
+    
+    while (1) {
+    }
+}
+ */
+
+/*
+ void __interrupt() isr() {
+
+    if (RBIF) {
+        switch (PORTB >> 4 & MASK) {
+            
+            case 0: 
+                LATB = 0;
+                break;
+            case 1: 
+                LATB0 = 1;
+                LATB1 = 0;
+                LATB2 = 0;
+                break;
+            case 2: 
+                LATB0 = 0;
+                LATB1 = 1;
+                LATB2 = 0;
+                break;
+            case 3: 
+                LATB0 = 0;
+                LATB1 = 0;
+                LATB2 = 1;
+                break;
+        default:;
+        }
+        RBIF = 0;
+    }
+}
+void main(void) {
+
+    GIE = 1;
+    PEIE = 0;
+    IPEN = 0;
+
+    RBIE = 1;
+    RBIF = 0;
+    INTEDG0 = 1;
+
+    TRISB0 = 0;
+    TRISB1 = 0;
+    TRISB2 = 0;
+    LATB0 = 0;
+    LATB1 = 0;
+    LATB2 = 0;
+
+    while (1) {
+    }
+}
+ */
+
+#include "lcd.h"
+#include "motor_test.h" 
+#include <stdlib.h>
+
+void __interrupt() isr() {
+
+    if (TMR0IF) {
+
+    TMR0IF = 0 ;
+    }
+}    
+
+void main(void) {
+
+    LCD_Initialize();
+    GIE = 1;
+    PEIE = 1;
+    IPEN = 0;
+
+    TMR0IF = 1;
+    TMR0IF = 0;
+
+    while (1) {
+    }
+}

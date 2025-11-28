@@ -1,0 +1,261 @@
+/*  char i = 0 ;
+    TRISB0 = 1;
+    TRISC = 0;
+    LATC = 0;
+
+    while (1) { 
+    if (!PORTBbits.RB0) {i++;}    
+    while (!PORTBbits.RB0){
+    if(i==1){LATC0 = 1;}
+    else if(i==2){LATC1 = 1;}
+    else if(i==3){LATC2 = 1;}
+    else if(i==4){LATC = 0; i = 0 ;}    
+  }
+ }
+ */
+
+
+/*  switch(i){
+      case 1 : LATC0 = 1 ; 
+ *    break;
+      case 2 : LATC1 = 1 ; 
+ *    break;
+      case 3 : LATC2 = 1 ; 
+ *    break;
+      default : LATC = 0 ; i = 0 ;
+  }
+ * /
+ */
+
+/*
+ * LCD_Initialize();
+    LCDPutCmd(LCD_CLEAR);
+
+   char Arr[11] = {'H', 'E', 'L', 'L', 'O',' ' , 'W', 'O', 'R', 'L', 'D'}; //OR = "HELLO WORLD"
+        while(1){
+        
+     for (char j = 0 ; j < 11 ; j++) {
+        LCDGoto(j, 0);
+        LCDPutChar(Arr[j]);
+        __delay_ms(150);
+      
+  }
+     LCDPutCmd(LCD_CLEAR);
+    }*/
+
+
+/*  LCD_Initialize();
+    LCDPutCmd(LCD_CLEAR);
+
+    while (1) {
+
+        for (char i = 0; i < 100; i++) {
+            LCDGoto(0, 0);
+            LCDPutChar(i / 10 + '0');
+            LCDGoto(1, 0);
+            LCDPutChar(i % 10 + '0');
+            __delay_ms(150);
+
+
+        }
+    }*/
+
+/*    TRISB0 = 1;
+    TRISB1 = 1;
+    TRISB2 = 1;
+    TRISC0 = 0;
+    LATC0 = 0;
+    char page = 0;
+
+    LCD_Initialize();
+    LCDPutCmd(LCD_CLEAR);
+
+
+    while (1) {
+
+        if (!PORTBbits.RB0) {
+            __delay_ms(5);
+            page--;
+            if (page < 0) page = 0;
+            if (!PORTBbits.RB0);
+            __delay_ms(5);
+        }
+        if (!PORTBbits.RB1) {
+            __delay_ms(5);
+            page++;
+            if (page > 2) page = 2;
+            if (!PORTBbits.RB1);
+            __delay_ms(5);
+
+        }
+        switch (page) {
+            case 1: goto L1;
+                break;
+            case 2: goto L2;
+                break;
+            case 3: goto L3;
+                break;
+            default:
+                LCDPutCmd(LCD_CLEAR);
+                LATB3 = 0;
+        }
+L1:
+        while (1) {
+        }
+L2:
+        while (1) {
+        }
+L3:
+        while (1) {
+        }*/
+
+
+/*
+ TRISC = 0;
+    TRISB0 = 1;
+    TRISB1 = 1;
+    LATC0 = 1;
+    LATC1 = 0;
+    LATC2 = 0;
+
+    while (1) {
+
+        if (!PORTBbits.RB0) {
+            __delay_ms(5);
+            LATC2 = !LATC2;
+            while (!PORTBbits.RB0);
+            __delay_ms(5);
+        }
+        if (!PORTBbits.RB1) {
+            __delay_ms(5);
+            LATC0 = !LATC0 ;
+            LATC1 = !LATC1 ;
+            while (!PORTBbits.RB1);
+            __delay_ms(5);
+        }
+
+ */
+
+/*
+ TRISC = 0;
+    TRISB0 = 1;
+    TRISB1 = 1;
+    LATC0 = 1;
+    LATC1 = 0;
+    LATC2 = 0;
+    char Q = 0;
+
+    LCD_Initialize();
+    LCDPutCmd(LCD_CLEAR);
+
+    while (1) {
+
+        if (!PORTBbits.RB0) {
+            __delay_ms(5);
+            while (!PORTBbits.RB0) {
+                __delay_ms(10);
+                Q++;
+                if (Q >= 100) LATC2 = !LATC2;
+            }
+            Q = 0;
+            __delay_ms(5);
+        }
+        if (!PORTBbits.RB0) {
+            __delay_ms(5);
+            LATC0 = !LATC0;
+            LATC1 = !LATC1;
+            while (!PORTBbits.RB1);
+            __delay_ms(5);
+        }
+
+        if (LATC2) {
+            LCDGoto(0, 0);
+            LCDPutStr("Motor On");
+            if (LATC0) {
+                LCDGoto(0, 1);
+                LCDPutStr("CW ");
+            } else {
+                LCDGoto(0, 1);
+                LCDPutStr("CWW");
+            }
+        } else {
+            LCDGoto(0, 0);
+            LCDPutStr("Motor off");
+            LCDGoto(0, 1);
+            LCDPutStr("        ");
+        }
+
+    }
+ */
+
+
+/*
+
+ * __bit motor_stat;
+
+ * __bit motor_dir;
+
+ *V 
+ *  motor_initialization();
+    LCD_Initialize();
+    LCDPutCmd(LCD_CLEAR);
+
+    while (1) {
+
+        if (!PORTBbits.RB0) {
+            __delay_ms(5);
+            motor_stat = !motor_stat;
+            if (motor_stat) motor_start();
+            else motor_stop();
+            while (!PORTBbits.RB0);
+            __delay_ms(5);
+        }
+        if (!PORTBbits.RB0) {
+            __delay_ms(5);
+            motor_dir = !motor_dir;
+            if (motor_dir) motor_cw();
+            else motor_ccw();
+            while (!PORTBbits.RB1);
+            __delay_ms(5);
+        }
+    }
+ */
+
+
+/*
+ TRISB0 = 1;
+    LATB0 = 0;
+
+    char msg[] = "Hello world!";
+    int x = 0;
+    int num = 0;
+
+    LCD_Initialize();
+    LCDPutCmd(LCD_CLEAR);
+
+    while (1) {
+
+        if (!PORTBbits.RB0) {
+            __delay_ms(5);
+            x = rand() % sizeof (msg) - 1;
+            x = x % 11;
+            while (!PORTBbits.RB0);
+            __delay_ms(5);
+
+            for (char i = 0; i < 12; i++) {
+                if (msg[x] == msg[i]) {
+                    num++;
+                }
+            }
+        }
+
+
+        LCDGoto(0, 0);
+        LCDPutStr("Repeated ");
+        LCDPutChar(msg[x]);
+        LCDGoto(0, 1);
+        LCDPutChar(num + '0');
+   
+    }
+ */
+
